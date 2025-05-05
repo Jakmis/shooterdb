@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Kluby{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row m-3">
+        <div class="col-sm-12">
+            <h2 class="display-3 text-center">Seznam Klubů</h2>
+        </div>
+    </div>
+    <div class="row">
+        {% for club in clubs %}
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
+            <div class="card text-center shadow mb-5 bg-body rounded">
+                {% comment %} <img src="{% static 'img/avatar.png' %}"
+                    class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                    alt="{{ person.fname }} {{ person.sname }}"> {% endcomment %}
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Evidenční č. {{ club.club_id }}</h6>
+                    <h4 class="card-title">{{ club.name }} }}</h4>
+                    <p class="card-text">
+                    </p>
+                    <a href="{% url 'club_detail' club.club_id %}" class="btn btn-primary mt-2">Více informací</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

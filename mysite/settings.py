@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", default="django-insecure-4v3@#&!$@*0g1j2b5z3r8x6q9h7f5^&*%$#@!")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = bool(os.environ.get("DEBUG", default=1))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
 
@@ -32,7 +32,6 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
 
 INSTALLED_APPS = [
     'shooterdb.apps.ShooterdbConfig',
-    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,11 +50,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-]
-
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -86,7 +79,7 @@ DATABASES = {
          'ENGINE': 'django.db.backends.{}'.format(
              os.getenv('DATABASE_ENGINE', 'sqlite3')
          ),
-         'NAME': os.getenv('DATABASE_NAME', 'shooterdb'),
+         'NAME': os.getenv('DATABASE_NAME', 'db.sqlite3'),
          'USER': os.getenv('DATABASE_USERNAME', 'myprojectuser'),
          'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
          'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),

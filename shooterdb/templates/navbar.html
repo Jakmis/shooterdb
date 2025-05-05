@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container px-5">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <div class="logo-container" role="img" aria-label="ShooterDB Logo">
+                <svg viewBox="0 0 64 64" aria-hidden="true">
+                    <!-- Outer circle -->
+                    <circle cx="32" cy="32" r="30" />
+                    <!-- Inner rings -->
+                    <circle cx="32" cy="32" r="20" />
+                    <circle cx="32" cy="32" r="10" />
+                    <!-- Crosshairs -->
+                    <line x1="32" y1="2" x2="32" y2="14" />
+                    <line x1="32" y1="50" x2="32" y2="62" />
+                    <line x1="2" y1="32" x2="14" y2="32" />
+                    <line x1="50" y1="32" x2="62" y2="32" />
+                    <!-- Center dot -->
+                    <circle cx="32" cy="32" r="4" fill="#00bfa5" stroke="none" />
+                </svg>
+                <div class="logo-text">ShooterDB</div>
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link text-white" aria-current="page"
+                        href="{% url 'index' %}">Domů</a>
+                </li>
+                <li class="nav-item"><a class="nav-link text-white" href="/persons">Členové</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/clubs">Kluby</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="/admin">Admin</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

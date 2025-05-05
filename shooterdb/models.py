@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.db.models import JSONField
 # Create your models here.
 class Club(models.Model):
     club_id = models.CharField(max_length=10, unique=True, verbose_name="ID")
@@ -108,7 +109,9 @@ class Result(models.Model):
     competition = models.ForeignKey(Competition, on_delete=models.CASCADE)
     discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    series = models.JSONField(blank=True, null=True)
     score = models.IntegerField()
+    center = models.IntegerField(blank=True, null=True)
     rank = models.IntegerField()
 
     def clean(self):

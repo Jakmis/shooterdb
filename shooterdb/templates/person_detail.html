@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block title %} {{ person.fname }} {{ person.sname }} {% endblock title %}
+
+{% block content %}
+
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="col-lg-5"><img class="img-fluid rounded mb-4 mb-lg-0 shadow bg-body"
+                src="{% static 'img/avatar.png' %}" alt="{{ person.fname }} {{ person.sname }}" /></div>
+        <div class="col-lg-7">
+            <h1 class="fw-bold">{{ person.fname }} {{ person.sname }}</h1>
+            <h6 class="fst-italic fw-normal">Evidenční č. {{ person.person_id }} </h6>
+            <h6 class="fw-normal"><strong>Klub:</strong> {{ person.club.name }}</h6>
+            <h6 class="fw-normal"><strong>Datum narození:</strong> {{ person.date_of_birth }}</h6>
+            {% if is_trainer %}
+            <h5>Trenér</h5>
+            <p>Licence: {{ trainer.license_number }}</p>
+            <p>Specializace:
+                {{ trainer.specialization.all|join:", " }}
+            </p>
+            {% endif %}
+            {% if is_referee %}
+            <h5>Rozhodčí</h5>
+            <p>Licence: {{ referee.license_number }}</p>
+            <p>Specializace:
+                {{ referee.specialization.all|join:", " }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="col">
+            <h2 class="pb-3">Výsledky závodů</h2>
+            {% for discipline, results in results_by_discipline.items %}
+            <h4 class="text-center">{{ discipline }}</h4>
+            <table class="table table-hover table-bordered table-sm text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Pořadí</th>
+                        <th scope="col">Název závodu</th>
+                        <th scope="col">Datum</th>
+                        {% for _ in results.0.series %}
+                        <th scope="col">{{ forloop.counter }}.</th>
+                        {% endfor %}
+                        <th scope="col">Skóre</th>
+                        <th scope="col">Střed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{ result.rank }}</td>
+                        <td>{{ result.competition.name }}</td>
+                        <td>{{ result.competition.date }}</td>
+                        {% for serie in result.series %}
+                        <td>{{ serie }}</td>
+                        {% endfor %}
+                        <td>{{ result.score }}</td>
+                        <td>{{ result.center }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

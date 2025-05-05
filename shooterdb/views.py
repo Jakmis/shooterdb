@@ -46,8 +46,6 @@ def person_detail_view(request, person_id):
     if is_referee:
         referee = person.referee
 
-
-
     context = {
         'person': person,
         'is_shooter': is_shooter,

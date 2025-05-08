@@ -1,30 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} Členové {% endblock %}
-{%block content %}
-<div class="container">
+{% block title %}
+  Členové
+{% endblock %}
+{% block content %}
+  <div class="container">
     <div class="row m-3">
-        <div class="col-sm-12">
-            <h2 class="display-3 text-center">Seznam Členů</h2>
+      <div class="col-lg-12">
+        <h2 class="display-3 text-center">Seznam Členů</h2>
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col-lg-6">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default">Hledat:</span>
+          <input type="text" class="form-control" placeholder="Hledat podle Jména, Příjmení a ID" />
+          <button class="btn btn-outline-primary" type="button" id="button-addon2">Button</button>
         </div>
+      </div>
+      <div class="col-lg-6">
+        <button class="btn btn-primary float-end" type="button" id="button-addon2"><i class="bi bi-plus"></i> Přidat člena</button>
+      </div>
     </div>
     <div class="row">
-        {% for person in persons %}
+      {% for person in persons %}
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-            <div class="card text-center shadow mb-5 bg-body rounded">
-                <img src="{% static 'img/avatar.png' %}"
-                    class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
-                    alt="{{ person.fname }} {{ person.sname }}">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Evidenční č. {{ person.person_id }}</h6>
-                    <h4 class="card-title">{{ person.fname }} {{person.sname}}</h4>
-                    <p class="card-text">
-                    </p>
-                    <a href="{% url 'person_detail' person.person_id %}" class="btn btn-primary mt-2">Více informací</a>
-                </div>
+          <div class="card text-center shadow mb-5 bg-body rounded">
+            <img src="{% static 'img/avatar.png' %}" class="img-fluid" alt="{{ person.fname }} {{ person.sname }}" />
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">Evidenční č. {{ person.person_id }}</h6>
+              <h4 class="card-title">{{ person.fname }} {{ person.sname }}</h4>
+              <p class="card-text"></p>
+              <a href="{% url 'person_detail' person.person_id %}" class="btn btn-primary mt-2">Více informací</a>
             </div>
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     </div>
-</div>
+  </div>
 {% endblock %}

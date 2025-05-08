@@ -36,7 +36,7 @@ def person_detail_view(request, person_id):
         for result in results:
             disc_name = result.discipline.name
             results_by_discipline[disc_name].append(result)
-
+            
         for disc, res_list in results_by_discipline.items():
             best_result = max(res_list, key=lambda x: x.score)
             best_results[disc] = best_result
@@ -65,4 +65,11 @@ def club_list_view(request):
 
 def club_detail_view(request, club_id):
     club = get_object_or_404(Club, club_id=club_id)
-    return render(request, 'club_detail.html', {'club': club})
+    shooters = Person.objects.filter(club=club).select_related('shooter')
+    shooters_count = shooters.count()
+    context = {
+        'club': club,
+        'shooters': shooters,
+        'shooters_count': shooters_count,
+    }
+    return render(request, 'club_detail.html', context)

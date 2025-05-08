@@ -13,56 +13,76 @@
             <h6 class="fst-italic fw-normal">Evidenční č. {{ person.person_id }} </h6>
             <h6 class="fw-normal"><strong>Klub:</strong> {{ person.club.name }}</h6>
             <h6 class="fw-normal"><strong>Datum narození:</strong> {{ person.date_of_birth }}</h6>
-            {% if is_trainer %}
-            <h5>Trenér</h5>
-            <p>Licence: {{ trainer.license_number }}</p>
-            <p>Specializace:
-                {{ trainer.specialization.all|join:", " }}
-            </p>
-            {% endif %}
-            {% if is_referee %}
-            <h5>Rozhodčí</h5>
-            <p>Licence: {{ referee.license_number }}</p>
-            <p>Specializace:
-                {{ referee.specialization.all|join:", " }}
-            </p>
-            {% endif %}
+            <div class="row mt-3">
+                {% if is_trainer %}
+                <div class="col-lg-6">
+                    <div class="card" style="width: 19rem;">
+                        <div class="card-header">
+                            <strong>
+                                Trenér
+                            </strong>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Licence: {{ trainer.license_number }}</li>
+                            <li class="list-group-item">Specializace: {{ trainer.specialization.all|join:", "}}</li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+                {% if is_referee %}
+                <div class="col-lg-6">
+                    <div class="card" style="width: 19rem;">
+                        <div class="card-header">
+                            <strong>
+                                Rozhodčí
+                            </strong>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Licence: {{ referee.license_number }}</li>
+                            <li class="list-group-item">Specializace: {{ referee.specialization.all|join:", "}}</li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="row gx-4 gx-lg-5 align-items-center my-5">
         <div class="col">
             <h2 class="pb-3">Výsledky závodů</h2>
+            {% if is_shooter %}
+            
             {% for discipline, results in results_by_discipline.items %}
-            <h4 class="text-center">{{ discipline }}</h4>
-            <table class="table table-hover table-bordered table-sm text-center">
+            <h4>Disciplína: {{ discipline }}</h4>
+            <table class="table table-bordered table-sm">
                 <thead>
-                    <tr>
-                        <th scope="col">Pořadí</th>
-                        <th scope="col">Název závodu</th>
-                        <th scope="col">Datum</th>
-                        {% for _ in results.0.series %}
-                        <th scope="col">{{ forloop.counter }}.</th>
-                        {% endfor %}
-                        <th scope="col">Skóre</th>
-                        <th scope="col">Střed</th>
-                    </tr>
+                <tr>
+                    <th>Závod</th>
+                    <th>Datum</th>
+                    <th>Skóre</th>
+                    <th>Pořadí</th>
+                    {% for i in results.0.series %}
+                    <th>Položka {{ forloop.counter }}</th>
+                    {% endfor %}
+                </tr>
                 </thead>
                 <tbody>
-                    {% for result in results %}
-                    <tr>
-                        <td>{{ result.rank }}</td>
-                        <td>{{ result.competition.name }}</td>
-                        <td>{{ result.competition.date }}</td>
-                        {% for serie in result.series %}
-                        <td>{{ serie }}</td>
-                        {% endfor %}
-                        <td>{{ result.score }}</td>
-                        <td>{{ result.center }}</td>
-                    </tr>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.competition.name }}</td>
+                    <td>{{ result.competition.date|date:"j. E Y" }}</td>
+                    <td>{{ result.score }}</td>
+                    <td>{{ result.rank }}</td>
+                    {% for value in result.series %}
+                    <td>{{ value }}</td>
                     {% endfor %}
+                </tr>
+                {% endfor %}
                 </tbody>
             </table>
             {% endfor %}
+
+            {% endif %}
         </div>
     </div>
 </div>

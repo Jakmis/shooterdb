@@ -1,18 +1,63 @@
 {% extends 'base.html' %}
-{% block title %} Domů {% endblock %}
-
-{% block header %}
-<div class="row gx-4 gx-lg-5 align-items-center my-5">
-    <div class="col-lg-12">
-        <h1 class="font-weight-light">Shooter Database!</h1>
-    </div>
-</div>
-{% endblock header %}
-
 {% block content %}
-<div class="container px-4 px-lg-5">
-    <div class="row">
+<div class="container mt-4">
 
+    <h1 class="mb-4">Informační systém sportovní střelby</h1>
+    <p class="lead">Vítejte v systému pro správu střelců, trenérů a výsledků soutěží.</p>
+
+    <hr>
+
+    <h3 class="mt-5">📊 Statistiky</h3>
+    <div class="row text-center">
+        <div class="col-md-3">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Střelců</h5>
+                    <p class="card-text fs-4">{{ shooter_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Trenérů</h5>
+                    <p class="card-text fs-4">{{ trainer_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Soutěží</h5>
+                    <p class="card-text fs-4">{{ competition_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Disciplín</h5>
+                    <p class="card-text fs-4">{{ discipline_count }}</p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <hr>
+
+    <h3 class="mt-5">🆕 Nejnovější soutěže</h3>
+    <ul class="list-group mb-4">
+        {% for comp in competitions %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong>{{ comp.name }}</strong> - {{ comp.date|date:"j. n. Y" }}
+            </div>
+            <a href="{% url 'competition_detail' comp.pk %}" class="btn btn-sm btn-outline-primary">Zobrazit</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">Zatím nejsou k dispozici žádné soutěže.</li>
+        {% endfor %}
+    </ul>
+
 </div>
 {% endblock %}

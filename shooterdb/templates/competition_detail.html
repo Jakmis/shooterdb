@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static%}
+{% block title %}{{ competition.name }}{% endblock %}
+{% block content %}
+
+<div class="container my-4">
+    <h2>{{ competition.name }}</h2>
+    <p><strong>Datum:</strong> {{ competition.date|date:"j. E Y" }}</p>
+    <p><strong>Místo:</strong> {{ competition.location }}</p>
+    <p><strong>Disciplíny:</strong>
+        {% for discipline in competition.disciplines.all %}
+        {{ discipline.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <hr>
+    <div class="card my-3">
+        <div class="card-header">
+            <h4>Výsledky</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for result in results %}
+                <li class="list-group-item">
+                    <strong>Střelec:</strong> {{ result.shooter.person.fname }} {{ result.shooter.person.sname }} |
+                    <strong>Klub:</strong> {{ result.shooter.person.club.name }} |
+                    <strong>Disciplína:</strong> {{ result.discipline.name }} |
+                    <strong>Skóre:</strong> {{ result.score }} |
+                    <strong>Pořadí:</strong> {{ result.rank }}
+                    {% if result.series %}
+                    <br><strong>Položky:</strong>
+                    {% for s in result.series %}
+                    {{ s }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

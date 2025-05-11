@@ -114,12 +114,5 @@ class Result(models.Model):
     center = models.IntegerField(blank=True, null=True)
     rank = models.IntegerField()
 
-    def clean(self):
-        super().clean()
-        if self.category and self.category not in self.competition.categories.all():
-            raise ValidationError({
-                'kategorie': f"Kategorie '{self.categories}' není součástí závodu '{self.Competition}'."
-            })
-
     def __str__(self):
         return f"{self.shooter} - {self.competition} - {self.discipline} - {self.score}"
